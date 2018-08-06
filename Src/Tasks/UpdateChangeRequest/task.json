@@ -40,7 +40,7 @@
       }
     },
 	{
-      "name": "otherParameters",
+     "name": "otherParameters",
 	  "type": "multiLine",
 	  "label": "Additional change request parameters",
 	  "defaultValue": "",
@@ -66,7 +66,7 @@
         "EndpointId": "$(ServiceNowConnection)",
         "EndpointUrl": "$(endpoint.url)/api/x_mioms_vsts_integ/vstschangeintegration",
         "Method": "PATCH",
-        "Body": "{'vstsmetadata': '$(RELEASE.ENVIRONMENTURI)/$(RELEASE.DEPLOYMENTID)', 'state': '$(NewStatus)', 'additionalparams': $(otherParameters) }",
+        "Body": "{\"vstsmetadata\": \"$(RELEASE.ENVIRONMENTURI)/$(RELEASE.DEPLOYMENTID)\", \"state\": \"$(NewStatus)\", \"additionalparams\": \"$(otherParameters)\" }",
         "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
         "WaitForCompletion": "false",
         "Expression": "eq(jsonpath('$.result.message')[0], 'successful')"
