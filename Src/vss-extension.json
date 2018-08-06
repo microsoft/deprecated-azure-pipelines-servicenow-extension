@@ -2,8 +2,8 @@
   "manifestVersion": 1.0,
   "id": "vss-services-servicenowchangerequest",
   "name": "ServiceNow change request management",
-  "publisher": "NishuBansal",
-  "version": "0.0.2",
+  "publisher": "ms-vscs-rm",
+  "version": "0.0.1",
   "public": false,
   "description": "Manage ServiceNow change requests.",
   "categories": [ "Build and release" ],
@@ -27,10 +27,10 @@
       "path": "images/servicenow.png",
       "addressable": true
     },
-	{
+    {
       "path": "Tasks/QueryForStatusCreateIfNotExists"
     },
-	{
+    {
       "path": "Tasks/UpdateChangeRequest"
     }
   ],
@@ -40,7 +40,7 @@
     }
   },
   "contributions": [
-  {
+    {
       "id": "service-endpoint",
       "description": "ServiceNow connection",
       "type": "ms.vss-endpoint.service-endpoint-type",
@@ -52,32 +52,32 @@
           "displayName": "ServiceNow Url",
           "helpText": "Url of the ServiceNow instance to connect to."
         },
-		"dataSources": [
+        "dataSources": [
           {
             "name": "Priority",
             "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=element=priority^name=change_request&sysparm_fields=label",
             "resultSelector": "jsonpath:$.result[*].label"
           },
-		  {
+          {
             "name": "State",
             "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=element=state^name=change_request&sysparm_fields=label",
             "resultSelector": "jsonpath:$.result[*].label"
           },
-		  {
+          {
             "name": "Risk",
             "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=name=change_request^element=Risk&sysparm_fields=label",
             "resultSelector": "jsonpath:$.result[*].label"
           },
-		  {
+          {
             "name": "Impact",
             "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=element=Impact&sysparm_fields=label",
             "resultSelector": "jsonpath:$.result[*].label"
           },
-		  {
+          {
             "name": "Category",
             "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=name=change_request^element=category^inactive!=true",
             "resultSelector": "jsonpath:$.result[*].label"
-          }		  
+          }
         ],
         "authenticationSchemes": [
           {
@@ -110,7 +110,7 @@
         "helpMarkDown": "<a href=\"url-to-documentation\" target=\"_blank\"><b>Learn More</b></a>"
       }
     },
-	{
+    {
       "id": "serviceNowchangerequests-task1",
       "type": "ms.vss-distributed-task.task",
       "targets": [ "ms.vss-distributed-task.tasks" ],
@@ -118,7 +118,7 @@
         "name": "Tasks/QueryForStatusCreateIfNotExists"
       }
     },
-	{
+    {
       "id": "serviceNowchangerequests-task2",
       "type": "ms.vss-distributed-task.task",
       "targets": [ "ms.vss-distributed-task.tasks" ],

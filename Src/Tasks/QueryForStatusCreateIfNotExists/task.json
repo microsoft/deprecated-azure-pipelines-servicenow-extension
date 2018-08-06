@@ -137,7 +137,7 @@
       "helpMarkDown": "scheduled end time for change request"
     },
 	{
-      "name": "otherParameters",
+    "name": "otherParameters",
 	  "type": "multiLine",
 	  "label": "Additional change request parameters",
 	  "defaultValue": "",
@@ -194,7 +194,7 @@
         "EndpointId": "$(ServiceNowConnection)",
         "EndpointUrl": "$(endpoint.url)/api/x_mioms_vsts_integ/vstschangeintegration",
         "Method": "POST",
-        "Body": "{\"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \" $(schedulestarttime) \",  \"end_date\": \" $(scheduleendtime) \", \"vstsmetadata\": \"$(RELEASE.ENVIRONMENTURI)/$(RELEASE.DEPLOYMENTID)\", \"additionalparams\": $(otherParameters), \"x_mioms_vsts_integ_vsts_release_info\": \"Release: $(RELEASE.RELEASEWEBURL) \\r\\n EnvironmentName: $(RELEASE.ENVIRONMENTNAME) \\r\\n Requested By : $(RELEASE.DEPLOYMENT.REQUESTEDFOR)\" }",
+        "Body": "{\"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \" $(schedulestarttime) \",  \"end_date\": \" $(scheduleendtime) \", \"vstsmetadata\": \"$(RELEASE.ENVIRONMENTURI)/$(RELEASE.DEPLOYMENTID)\", \"additionalparams\": \"$(otherParameters)\", \"x_mioms_vsts_integ_vsts_release_info\": \"Release: $(RELEASE.RELEASEWEBURL) \\r\\n EnvironmentName: $(RELEASE.ENVIRONMENTNAME) \\r\\n Requested By : $(RELEASE.DEPLOYMENT.REQUESTEDFOR)\" }",
         "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
         "WaitForCompletion": "false",
         "Expression": "eq(jsonpath('$.result.state')[0], '$(DesiredExitStatus)')"
