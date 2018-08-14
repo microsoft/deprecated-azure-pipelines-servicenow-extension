@@ -77,6 +77,22 @@
             "name": "Category",
             "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=name=change_request^element=category^inactive!=true",
             "resultSelector": "jsonpath:$.result[*].label"
+          },
+          {
+            "name": "Configuration Item",
+            "endpointUrl": "{{endpoint.url}}/api/now/table/cmdb_ci?sysparm_fields=name&sysparm_limit=5000&sysparm_offset={{skip}}",
+            "resultSelector": "jsonpath:$.result[*].name",
+            "callbackContextTemplate": "{\"skip\": \"{{add skip 5000}}\"}",
+            "callbackRequiredTemplate": "{{isEqualNumber result.count 5000}}",
+            "initialContextTemplate": "{\"skip\": \"0\"}"
+          },
+          {
+            "name": "Assignment Group",
+            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_user_group?sysparm_element=assignment_group&sysparm_fields=name&sysparm_limit=1000&sysparm_offset={{skip}}",
+            "resultSelector": "jsonpath:$.result[*].name",
+            "callbackContextTemplate": "{\"skip\": \"{{add skip 1000}}\"}",
+            "callbackRequiredTemplate": "{{isEqualNumber result.count 1000}}",
+            "initialContextTemplate": "{\"skip\": \"0\"}"
           }
         ],
         "authenticationSchemes": [

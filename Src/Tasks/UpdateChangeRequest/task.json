@@ -19,7 +19,14 @@
     "Patch": 0
   },
   "instanceNameFormat": "Update ServiceNow change request",
-  
+  "groups": [
+    {
+      "name": "advancedInputs",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
+
   "inputs": [
     {
       "name": "ServiceNowConnection",
@@ -29,44 +36,69 @@
       "required": "true",
       "helpMarkDown": "The ServiceNow endpoint for the ServiceNow instance to query"
     },
-	{
+    {
+      "name": "ChangeType",
+      "type": "radio",
+      "label": "Change type to update",
+      "required": "true",
+      "helpMarkDown": "Choose change type for update change request.",
+      "options": {
+        "SystemDefined": "System defined",
+        "UserSpecific": "User specific"
+      }
+    },
+    {
+      "name": "ChangeRequestNumber",
+      "type": "string",
+      "label": "Change Request Number",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Change request that you want to update. Must be a valid number in Service now.",
+      "visibleRule": "ChangeType = UserSpecific"
+
+    },
+    {
       "name": "NewStatus",
       "type": "pickList",
       "label": "Updated status of change request",
       "required": "true",
-	  "helpMarkDown": "Status of change request that indicates the change request is ready to be implemented. Task would succeed when the the change request status is same as the provided value.",
-	  "properties": {
+      "helpMarkDown": "Status of change request that indicates the change request is ready to be implemented. Task would succeed when the the change request status is same as the provided value.",
+      "properties": {
         "EditableOptions": "True"
       }
     },
-	{
-     "name": "otherParameters",
-	  "type": "multiLine",
-	  "label": "Additional change request parameters",
-	  "defaultValue": "",
-	  "required": "false",
-	  "groupName": "advancedInputs",
-	  "helpMarkDown": "Additional properties of the change request to set. Name must be field name in ServiceNow. This may not be the same as the display label of the field. Value must be a valid, accepted value in serviceNow. Invalid entries are ignored.",
+    {
+      "name": "otherParameters",
+      "type": "multiLine",
+      "label": "Additional change request parameters",
+      "defaultValue": "{}",
+      "required": "false",
+      "groupName": "advancedInputs",
+      "helpMarkDown": "Additional properties of the change request to set. Enter the parameters in Json format. Name must be field name in ServiceNow. This may not be the same as the display label of the field. Value must be a valid, accepted value in serviceNow. Invalid entries are ignored.",
       "properties": {
         "editorExtension": "ms.vss-services-azure.azure-servicebus-message-grid"
+      },
+      "validation": {
+        "expression": "isMatch(value,'\\S', 'Multiline')",
+        "message": "Please specify input in valid json format"
       }
     }
   ],
-"dataSourceBindings": [
-  {
+  "dataSourceBindings": [
+    {
       "target": "NewStatus",
       "endpointId": "$(ServiceNowConnection)",
       "dataSourceName": "State"
     }
   ],
-  
+
   "execution": {
     "HttpRequest": {
       "Execute": {
         "EndpointId": "$(ServiceNowConnection)",
         "EndpointUrl": "$(endpoint.url)/api/x_mioms_vsts_integ/vstschangeintegration",
         "Method": "PATCH",
-        "Body": "{\"vstsmetadata\": \"$(RELEASE.ENVIRONMENTURI)/$(RELEASE.DEPLOYMENTID)\", \"state\": \"$(NewStatus)\", \"additionalparams\": \"$(otherParameters)\" }",
+        "Body": "{\"vstsmetadata\": \"$(SYSTEM.TEAMFOUNDATIONCOLLECTIONURI)$(SYSTEM.TEAMPROJECTID)/$(RELEASE.DEPLOYMENTID)\", \"changerequestnumber\": \"$(ChangeRequestNumber)\" ,\"changetype\": \"$(ChangeType)\" , \"state\": \"$(NewStatus)\", \"additionalparams\": $(otherParameters)}",
         "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
         "WaitForCompletion": "false",
         "Expression": "eq(jsonpath('$.result.message')[0], 'successful')"
