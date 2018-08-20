@@ -2,7 +2,7 @@
   "manifestVersion": 1.0,
   "id": "vss-services-servicenowchangerequest",
   "name": "ServiceNow change request management",
-  "publisher": "ms-vscs-rm",
+  "publisher": "NishuBansal",
   "version": "0.0.1",
   "public": false,
   "description": "Manage ServiceNow change requests.",
@@ -16,6 +16,9 @@
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services.Cloud"
+    },
+    {
+      "id": "Microsoft.VisualStudio.Services"
     }
   ],
   "demands": [],
@@ -29,6 +32,9 @@
     },
     {
       "path": "Tasks/QueryForStatusCreateIfNotExists"
+    },
+    {
+      "path": "Tasks/CreateAndQueryChangeRequest"
     },
     {
       "path": "Tasks/UpdateChangeRequest"
@@ -140,6 +146,14 @@
       "targets": [ "ms.vss-distributed-task.tasks" ],
       "properties": {
         "name": "Tasks/UpdateChangeRequest"
+      }
+    },
+    {
+      "id": "serviceNowchangerequests-task3",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [ "ms.vss-distributed-task.tasks" ],
+      "properties": {
+        "name": "Tasks/CreateAndQueryChangeRequest"
       }
     }
   ]
