@@ -2,7 +2,7 @@
   "id": "3D234B87-ED5A-44C9-A815-BAD99858601F",
   "name": "CreateAndQueryChangeRequest",
   "friendlyName": "Create and Query ServiceNow change request",
-  "description": "Create and query ServiceNow change request for the deployment",
+  "description": "Create and Query ServiceNow change request for the deployment",
   "author": "ServiceNow",
   "helpMarkDown": "[More Information]()",
   "category": "Utility",
@@ -239,10 +239,11 @@
             "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(sys_id)?sysparm_fields=state&&sysparm_display_value=true",
             "Method": "GET",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
-            "WaitForCompletion": "false"
+            "WaitForCompletion": "false",
+            "Expression": "eq(jsonpath('$.result.state')[0], '$(DesiredExitStatus)')"
           },
           "ExecutionOptions": {
-            "ContinuePollingExpression": "eq(jsonpath('$.result.state')[0], '$(DesiredExitStatus)')",
+            "ContinuePollingExpression": "ne(jsonpath('$.result.state')[0], '$(DesiredExitStatus)')",
             "DurationBetweenRetries": "00:02:00"
           }
         }
