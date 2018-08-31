@@ -18,7 +18,7 @@
       "id": "Microsoft.VisualStudio.Services.Cloud"
     },
     {
-      "id": "Microsoft.VisualStudio.Services"
+      "id": "Microsoft.TeamFoundation.Server"
     }
   ],
   "demands": [],

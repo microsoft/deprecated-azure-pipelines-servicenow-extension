@@ -230,13 +230,13 @@
             "Expression": "eq(jsonpath('$.result.state')[0], 'New')"
           },
           "ExecutionOptions": {
-            "OutputVariables": "{\"sys_id\" :  \"jsonpath('$.result.sys_id')[0]\"}"
+            "OutputVariables": "{\"sys_id\" :  \"jsonpath('$.result.sys_id')[0]\", \"CHANGE_REQUEST_NUMBER\" :  \"jsonpath('$.result.number')[0]\"}"
           }
         },
         {
           "RequestInputs": {
             "EndpointId": "$(ServiceNowConnection)",
-            "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(sys_id)?sysparm_fields=state&&sysparm_display_value=true",
+            "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(sys_id)?sysparm_fields=state,number&&sysparm_display_value=true",
             "Method": "GET",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
             "WaitForCompletion": "false",
