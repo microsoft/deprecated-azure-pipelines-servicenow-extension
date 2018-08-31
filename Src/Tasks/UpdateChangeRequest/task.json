@@ -1,8 +1,8 @@
 {
   "id": "6BBE8736-EE83-4BBF-A0AD-96B118797CC4",
   "name": "UpdateServiceNowChangeRequest",
-  "friendlyName": "Update ServiceNow change request",
-  "description": "Update ServiceNow change request for the current deployment",
+  "friendlyName": "Update ServiceNow Change Request",
+  "description": "Update ServiceNow Change Request",
   "author": "ServiceNow",
   "helpMarkDown": "[More Information]()",
   "category": "Utility",
@@ -18,7 +18,7 @@
     "Minor": 1,
     "Patch": 0
   },
-  "instanceNameFormat": "Update ServiceNow change request",
+  "instanceNameFormat": "Update ServiceNow Change Request",
   "groups": [
     {
       "name": "advancedInputs",
