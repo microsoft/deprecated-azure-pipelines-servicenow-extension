@@ -65,17 +65,17 @@
           },
           {
             "name": "Risk",
-            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=name=change_request^element=Risk&sysparm_fields=label",
+            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=name=change_request^element=Risk^ORDERBYDESCvalue&sysparm_fields=label",
             "resultSelector": "jsonpath:$.result[*].label"
           },
           {
             "name": "Impact",
-            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=element=Impact&sysparm_fields=label",
+            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=element=Impact^ORDERBYDESCvalue&sysparm_fields=label",
             "resultSelector": "jsonpath:$.result[*].label"
           },
           {
             "name": "Category",
-            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=name=change_request^element=category^inactive!=true",
+            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=name=change_request^element=category^inactive!=true&sysparm_fields=label",
             "resultSelector": "jsonpath:$.result[*].label"
           },
           {

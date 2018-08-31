@@ -1,8 +1,8 @@
 {
   "id": "6BBE8736-EE83-4BBF-A0AD-96B118797CC3",
   "name": "QueryServiceNowChangeRequestCreateIfNotExists",
-  "friendlyName": "Query serviceNow change status",
-  "description": "Query status of ServiceNow change request for the deployment",
+  "friendlyName": "ServiceNow Change Management",
+  "description": "Create and Query status of ServiceNow change request for the deployment",
   "author": "ServiceNow",
   "helpMarkDown": "[More Information]()",
   "category": "Utility",
@@ -19,24 +19,24 @@
     "Minor": 1,
     "Patch": 0
   },
-  "instanceNameFormat": "Query ServiceNow change request",
+  "instanceNameFormat": "ServiceNow Change Management",
   "groups": [
-        {
-            "name": "schedule",
-            "displayName": "Schedule of change request",
-            "isExpanded": false
-        },
-		{
-            "name": "advancedInputs",
-            "displayName": "Advanced",
-            "isExpanded": false
-        },
-		{
-            "name": "completionOptions",
-            "displayName": "Success criteria",
-            "isExpanded": true
-        }
-	],
+    {
+      "name": "schedule",
+      "displayName": "Schedule of change request",
+      "isExpanded": false
+    },
+    {
+      "name": "advancedInputs",
+      "displayName": "Advanced",
+      "isExpanded": false
+    },
+    {
+      "name": "completionOptions",
+      "displayName": "Success criteria",
+      "isExpanded": true
+    }
+  ],
   "inputs": [
     {
       "name": "ServiceNowConnection",
@@ -62,43 +62,43 @@
       "defaultValue": "Deployment to $(Release.EnvironmentName) of Release $(Release.ReleaseId)",
       "helpMarkDown": "Description of the change request. Use \r\n for newline."
     },
-	{
+    {
       "name": "category",
       "type": "pickList",
       "label": "Category",
       "required": "true",
       "helpMarkDown": "Category of the change request. Label and value are both accepted.",
-	    "properties": {
+      "properties": {
         "EditableOptions": "True"
       }
     },
-	{
+    {
       "name": "priority",
       "type": "pickList",
       "label": "Priority",
       "required": "true",
       "helpMarkDown": "Priority of the change request. Label and value are both accepted.",
-	    "properties": {
+      "properties": {
         "EditableOptions": "True"
       }
     },
-	{
+    {
       "name": "risk",
       "type": "pickList",
       "label": "Risk",
       "required": "true",
       "helpMarkDown": "Risk of the change request. Label and value are both accepted.",
-	    "properties": {
+      "properties": {
         "EditableOptions": "True"
       }
     },
-	{
+    {
       "name": "impact",
       "type": "pickList",
       "label": "Impact",
       "required": "true",
       "helpMarkDown": "Impact of the change request. Label and value are both accepted.",
-	    "properties": {
+      "properties": {
         "EditableOptions": "True"
       }
     },
@@ -166,15 +166,15 @@
         "message": "Please specify input in valid json format"
       }
     },
-	{
+    {
       "name": "DesiredExitStatus",
       "type": "pickList",
       "label": "Desired status of change request",
       "defaultValue": "Implement",
       "required": "true",
-	    "groupName": "completionOptions",
+      "groupName": "completionOptions",
       "helpMarkDown": "Status of change request that indicates the change request is ready to be implemented. Task would succeed when the the change request status is same as the provided value.",
-	    "properties": {
+      "properties": {
         "EditableOptions": "True"
       }
     }
