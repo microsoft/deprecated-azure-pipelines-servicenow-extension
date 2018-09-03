@@ -31,9 +31,6 @@
       "addressable": true
     },
     {
-      "path": "Tasks/QueryForStatusCreateIfNotExists"
-    },
-    {
       "path": "Tasks/CreateAndQueryChangeRequest"
     },
     {
@@ -137,19 +134,11 @@
       "type": "ms.vss-distributed-task.task",
       "targets": [ "ms.vss-distributed-task.tasks" ],
       "properties": {
-        "name": "Tasks/QueryForStatusCreateIfNotExists"
-      }
-    },
-    {
-      "id": "serviceNowchangerequests-task2",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [ "ms.vss-distributed-task.tasks" ],
-      "properties": {
         "name": "Tasks/UpdateChangeRequest"
       }
     },
     {
-      "id": "serviceNowchangerequests-task3",
+      "id": "serviceNowchangerequests-task2",
       "type": "ms.vss-distributed-task.task",
       "targets": [ "ms.vss-distributed-task.tasks" ],
       "properties": {

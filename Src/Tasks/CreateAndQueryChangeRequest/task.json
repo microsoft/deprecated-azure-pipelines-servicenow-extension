@@ -1,8 +1,8 @@
 ﻿{
   "id": "3D234B87-ED5A-44C9-A815-BAD99858601F",
   "name": "CreateAndQueryChangeRequest",
-  "friendlyName": "Create and Query ServiceNow change request",
-  "description": "Create and Query ServiceNow change request for the deployment",
+  "friendlyName": "ServiceNow Change Management",
+  "description": "Create and Query ServiceNow change request",
   "author": "ServiceNow",
   "helpMarkDown": "[More Information]()",
   "category": "Utility",
@@ -19,7 +19,7 @@
     "Minor": 1,
     "Patch": 0
   },
-  "instanceNameFormat": "Create and Query ServiceNow change request",
+  "instanceNameFormat": "ServiceNow Change Management",
   "groups": [
     {
       "name": "schedule",
@@ -230,13 +230,13 @@
             "Expression": "eq(jsonpath('$.result.state')[0], 'New')"
           },
           "ExecutionOptions": {
-            "OutputVariables": "{\"sys_id\" :  \"jsonpath('$.result.sys_id')[0]\", \"CHANGE_REQUEST_NUMBER\" :  \"jsonpath('$.result.number')[0]\"}"
+            "OutputVariables": "{\"CHANGE_SYSTEM_ID\" :  \"jsonpath('$.result.sys_id')[0]\", \"CHANGE_REQUEST_NUMBER\" :  \"jsonpath('$.result.number')[0]\"}"
           }
         },
         {
           "RequestInputs": {
             "EndpointId": "$(ServiceNowConnection)",
-            "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(sys_id)?sysparm_fields=state,number&&sysparm_display_value=true",
+            "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(CHANGE_SYSTEM_ID)?sysparm_fields=state,number&&sysparm_display_value=true",
             "Method": "GET",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
             "WaitForCompletion": "false",

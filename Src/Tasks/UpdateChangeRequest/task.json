@@ -37,24 +37,12 @@
       "helpMarkDown": "The ServiceNow endpoint for the ServiceNow instance to query"
     },
     {
-      "name": "ChangeType",
-      "type": "radio",
-      "label": "Change type to update",
-      "required": "true",
-      "helpMarkDown": "Choose change type for update change request.",
-      "options": {
-        "SystemDefined": "System defined",
-        "UserSpecific": "User specific"
-      }
-    },
-    {
-      "name": "ChangeRequestNumber",
+      "name": "ChangeRequestSystemId",
       "type": "string",
-      "label": "Change Request Number",
+      "label": "Change Request System Id",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Change request that you want to update. Must be a valid number in Service now.",
-      "visibleRule": "ChangeType = UserSpecific"
+      "helpMarkDown": "Change request that you want to update. Must be a valid system id in Service now."
 
     },
     {
@@ -96,12 +84,12 @@
     "HttpRequest": {
       "Execute": {
         "EndpointId": "$(ServiceNowConnection)",
-        "EndpointUrl": "$(endpoint.url)/api/x_mioms_vsts_integ/vstschangeintegration",
+        "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(ChangeRequestSystemId)?sysparm_fields=state&&sysparm_display_value=true",
         "Method": "PATCH",
-        "Body": "{\"vstsmetadata\": \"$(SYSTEM.TEAMFOUNDATIONCOLLECTIONURI)$(SYSTEM.TEAMPROJECTID)/$(RELEASE.DEPLOYMENTID)\", \"changerequestnumber\": \"$(ChangeRequestNumber)\" ,\"changetype\": \"$(ChangeType)\" , \"state\": \"$(NewStatus)\", \"additionalparams\": $(otherParameters)}",
+        "Body": "{\"state\": \"$(NewStatus)\", \"additionalparams\": $(otherParameters)}",
         "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
         "WaitForCompletion": "false",
-        "Expression": "eq(jsonpath('$.result.message')[0], 'successful')"
+        "Expression": "eq(jsonpath('$.result.state')[0], '$(NewStatus)')"
       }
     }
   }
