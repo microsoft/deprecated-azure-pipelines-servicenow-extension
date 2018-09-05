@@ -43,7 +43,6 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Change request that you want to update. Must be a valid system id in Service now."
-
     },
     {
       "name": "NewStatus",
@@ -54,6 +53,27 @@
       "properties": {
         "EditableOptions": "True"
       }
+    },
+
+    {
+      "name": "CloseCode",
+      "type": "pickList",
+      "label": "Close code",
+      "required": "true",
+      "helpMarkDown": "Closure information",
+      "properties": {
+        "EditableOptions": "True"
+      },
+      "visibleRule": "NewStatus = Closed"
+    },
+    {
+      "name": "CloseNotes",
+      "type": "text",
+      "label": "Close notes",
+      "required": "true",
+      "defaultValue": "",
+      "helpMarkDown": "Closure information",
+      "visibleRule": "NewStatus = Closed"
     },
     {
       "name": "otherParameters",
@@ -77,6 +97,11 @@
       "target": "NewStatus",
       "endpointId": "$(ServiceNowConnection)",
       "dataSourceName": "State"
+    },
+    {
+      "target": "CloseCode",
+      "endpointId": "$(ServiceNowConnection)",
+      "dataSourceName": "Close code"
     }
   ],
 
@@ -86,7 +111,7 @@
         "EndpointId": "$(ServiceNowConnection)",
         "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(ChangeRequestSystemId)?sysparm_fields=state&&sysparm_display_value=true",
         "Method": "PATCH",
-        "Body": "{\"state\": \"$(NewStatus)\", \"additionalparams\": $(otherParameters)}",
+        "Body": "{\"state\": \"$(NewStatus)\", \"close_code\": $(CloseCode), \"close_notes\": $(CloseNotes)}",
         "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
         "WaitForCompletion": "false",
         "Expression": "eq(jsonpath('$.result.state')[0], '$(NewStatus)')"
@@ -94,3 +119,9 @@
     }
   }
 }
+
+
+
+// Assess - Assignment Group mandatory
+// Closed - Close_code, Close_notes
+

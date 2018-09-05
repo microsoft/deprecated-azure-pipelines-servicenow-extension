@@ -82,6 +82,11 @@
             "resultSelector": "jsonpath:$.result[*].label"
           },
           {
+            "name": "Close code",
+            "endpointUrl": "{{endpoint.url}}/api/now/table/sys_choice?sysparm_query=element=Close_Code^ORDERBYDESCvalue&sysparm_fields=label&name=change_request",
+            "resultSelector": "jsonpath:$.result[*].label"
+          },
+          {
             "name": "Configuration Item",
             "endpointUrl": "{{endpoint.url}}/api/now/table/cmdb_ci?sysparm_fields=name&sysparm_limit=5000&sysparm_offset={{skip}}",
             "resultSelector": "jsonpath:$.result[*].name",
