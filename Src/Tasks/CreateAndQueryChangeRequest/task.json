@@ -185,10 +185,10 @@
       "required": "true",
       "defaultValue": "00:02:00",
       "groupName": "completionOptions",
-      "helpMarkDown": "Duration between retries in HH:MM:SS format",
+      "helpMarkDown": "Specify the duration greater than equal to 2 minutes in d.HH:MM:SS format",
       "validation": {
-        "expression": "isMatch(value,'([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$', 'Multiline')",
-        "message": "Duration should be in HH:MM:SS format"
+        "expression": "and(isMatch(value,'^([0-9]+).([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$', 'Multiline'), isMatch(value,'^((?!(0.00:0[0-1]:([0-5][0-9])$)).)*$', 'Multiline') )",
+        "message": "Duration should be in d.HH:MM:SS format and greater than equal to 2 minutes."
       }
     }
   ],
@@ -237,7 +237,7 @@
             "EndpointId": "$(ServiceNowConnection)",
             "EndpointUrl": "$(endpoint.url)/api/now/table/change_request?sysparm_fields=state,number,sys_id&&sysparm_display_value=true",
             "Method": "POST",
-            "Body": "{\"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \" $(schedulestarttime) \",  \"end_date\": \" $(scheduleendtime) \"}",
+            "Body": "{ \"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \"$(schedulestarttime)\",  \"end_date\": \"$(scheduleendtime)\" {{#each otherParameters}},\"{{@key}}\" : \"{{this}}\" {{/each}}  }",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
             "WaitForCompletion": "false",
             "Expression": "eq(jsonpath('$.result.state')[0], 'New')"
