@@ -79,16 +79,11 @@
       "name": "otherParameters",
       "type": "multiLine",
       "label": "Additional change request parameters",
-      "defaultValue": "{}",
       "required": "false",
       "groupName": "advancedInputs",
       "helpMarkDown": "Additional properties of the change request to set. Enter the parameters in Json format. Name must be field name in ServiceNow. This may not be the same as the display label of the field. Value must be a valid, accepted value in serviceNow. Invalid entries are ignored.",
       "properties": {
         "editorExtension": "ms.vss-services-azure.azure-servicebus-message-grid"
-      },
-      "validation": {
-        "expression": "isMatch(value,'\\S', 'Multiline')",
-        "message": "Please specify input in valid json format"
       }
     }
   ],
@@ -126,7 +121,7 @@
             "EndpointId": "$(ServiceNowConnection)",
             "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(CHANGE_SYSTEM_ID)?sysparm_fields=state&&sysparm_display_value=true",
             "Method": "PATCH",
-            "Body": "{\"state\": \"$(NewStatus)\"{{#equals NewStatus 'Closed'}}, \"close_code\": \"$(CloseCode)\", \"close_notes\": \"$(CloseNotes)\"{{/equals}} }",
+            "Body": "{\"state\": \"$(NewStatus)\"{{#equals NewStatus 'Closed'}}, \"close_code\": \"$(CloseCode)\", \"close_notes\": \"$(CloseNotes)\"{{/equals}} {{#if otherParameters}}{{convertToCommaDelimitedKeyValueList otherParameters true}}{{/if}} }",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
             "WaitForCompletion": "false",
             "Expression": "eq(jsonpath('$.result.state')[0], '$(NewStatus)')"

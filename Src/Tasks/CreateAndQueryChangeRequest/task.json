@@ -154,16 +154,12 @@
       "name": "otherParameters",
       "type": "multiLine",
       "label": "Additional change request parameters.",
-      "defaultValue": "{}",
+      "defaultValue": "",
       "required": "false",
       "groupName": "advancedInputs",
       "helpMarkDown": "Additional properties of the change request to set. Enter the parameters as key value pairs in Json format. Name must be field name in ServiceNow. This may not be the same as the display label of the field. Value must be a valid, accepted value in serviceNow. Invalid entries are ignored.",
       "properties": {
         "editorExtension": "ms.vss-services-azure.azure-servicebus-message-grid"
-      },
-      "validation": {
-        "expression": "isMatch(value,'\\S', 'Multiline')",
-        "message": "Please specify input in valid json format"
       }
     },
     {
@@ -237,7 +233,7 @@
             "EndpointId": "$(ServiceNowConnection)",
             "EndpointUrl": "$(endpoint.url)/api/now/table/change_request?sysparm_fields=state,number,sys_id&&sysparm_display_value=true",
             "Method": "POST",
-            "Body": "{ \"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \"$(schedulestarttime)\",  \"end_date\": \"$(scheduleendtime)\" {{#each otherParameters}},\"{{@key}}\" : \"{{this}}\" {{/each}}  }",
+            "Body": "{ \"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \"$(schedulestarttime)\",  \"end_date\": \"$(scheduleendtime)\" {{#if otherParameters}}{{convertToCommaDelimitedKeyValueList otherParameters true}}{{/if}} }",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
             "WaitForCompletion": "false",
             "Expression": "eq(jsonpath('$.result.state')[0], 'New')"
