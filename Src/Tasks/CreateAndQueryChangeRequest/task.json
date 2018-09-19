@@ -179,7 +179,7 @@
       "type": "string",
       "label": "Duration between retries",
       "required": "true",
-      "defaultValue": "00:02:00",
+      "defaultValue": "0.00:02:00",
       "groupName": "completionOptions",
       "helpMarkDown": "Specify the duration greater than equal to 2 minutes in d.HH:MM:SS format",
       "validation": {
