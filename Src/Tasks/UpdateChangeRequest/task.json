@@ -37,12 +37,12 @@
       "helpMarkDown": "The ServiceNow endpoint for the ServiceNow instance to query"
     },
     {
-      "name": "ChangeRequestNumber",
+      "name": "ChangeRequestSystemId",
       "type": "string",
-      "label": "Change Request Number",
+      "label": "Change Request System Id",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Change request that you want to update. Must be a valid change request number in Service now."
+      "helpMarkDown": "Change request that you want to update. Must be a valid system id in Service now."
     },
     {
       "name": "NewStatus",
@@ -101,33 +101,16 @@
   ],
 
   "execution": {
-    "HttpRequestChain": {
-      "Execute": [
-        {
-          "RequestInputs": {
-            "EndpointId": "$(ServiceNowConnection)",
-            "EndpointUrl": "$(endpoint.url)/api/now/table/change_request?sysparm_query=number=$(ChangeRequestNumber)&sysparm_fields=sys_id,number",
-            "Method": "GET",
-            "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
-            "WaitForCompletion": "false",
-            "Expression": "eq(jsonpath('$.result[0].number')[0], '$(ChangeRequestNumber)')"
-          },
-          "ExecutionOptions": {
-            "OutputVariables": "{\"CHANGE_SYSTEM_ID\" :  \"jsonpath('$.result[0].sys_id')[0]\"}"
-          }
-        },
-        {
-          "RequestInputs": {
-            "EndpointId": "$(ServiceNowConnection)",
-            "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(CHANGE_SYSTEM_ID)?sysparm_fields=state&&sysparm_display_value=true",
-            "Method": "PATCH",
-            "Body": "{\"state\": \"$(NewStatus)\"{{#equals NewStatus 'Closed'}}, \"close_code\": \"$(CloseCode)\", \"close_notes\": \"$(CloseNotes)\"{{/equals}} {{#if otherParameters}}{{toCommaSeparatedKeyValueList otherParameters true}}{{/if}} }",
-            "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
-            "WaitForCompletion": "false",
-            "Expression": "eq(jsonpath('$.result.state')[0], '$(NewStatus)')"
-          }
-        }
-      ]
+    "HttpRequest": {
+      "Execute": {
+        "EndpointId": "$(ServiceNowConnection)",
+        "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(ChangeRequestSystemId)?sysparm_fields=state&&sysparm_display_value=true",
+        "Method": "PATCH",
+        "Body": "{\"state\": \"$(NewStatus)\"{{#equals NewStatus 'Closed'}}, \"close_code\": $(CloseCode), \"close_notes\": $(CloseNotes)} {{/equals}} {{#if otherParameters}}{{toCommaSeparatedKeyValueList otherParameters true}}{{/if}}",
+        "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
+        "WaitForCompletion": "false",
+        "Expression": "eq(jsonpath('$.result.state')[0], '$(NewStatus)')"
+      }
     }
   }
 }
