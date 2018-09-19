@@ -121,7 +121,7 @@
             "EndpointId": "$(ServiceNowConnection)",
             "EndpointUrl": "$(endpoint.url)/api/now/table/change_request/$(CHANGE_SYSTEM_ID)?sysparm_fields=state&&sysparm_display_value=true",
             "Method": "PATCH",
-            "Body": "{\"state\": \"$(NewStatus)\"{{#equals NewStatus 'Closed'}}, \"close_code\": \"$(CloseCode)\", \"close_notes\": \"$(CloseNotes)\"{{/equals}} {{#if otherParameters}}{{convertToCommaDelimitedKeyValueList otherParameters true}}{{/if}} }",
+            "Body": "{\"state\": \"$(NewStatus)\"{{#equals NewStatus 'Closed'}}, \"close_code\": \"$(CloseCode)\", \"close_notes\": \"$(CloseNotes)\"{{/equals}} {{#if otherParameters}}{{toCommaSeparatedKeyValueList otherParameters true}}{{/if}} }",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
             "WaitForCompletion": "false",
             "Expression": "eq(jsonpath('$.result.state')[0], '$(NewStatus)')"

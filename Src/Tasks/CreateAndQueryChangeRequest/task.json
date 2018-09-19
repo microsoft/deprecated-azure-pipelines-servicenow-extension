@@ -233,7 +233,7 @@
             "EndpointId": "$(ServiceNowConnection)",
             "EndpointUrl": "$(endpoint.url)/api/now/table/change_request?sysparm_fields=state,number,sys_id&&sysparm_display_value=true",
             "Method": "POST",
-            "Body": "{ \"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \"$(schedulestarttime)\",  \"end_date\": \"$(scheduleendtime)\" {{#if otherParameters}}{{convertToCommaDelimitedKeyValueList otherParameters true}}{{/if}} }",
+            "Body": "{ \"short_description\": \"$(shortdescription)\", \"description\": \"$(description)\", \"category\": \"$(category)\", \"priority\": \"$(priority)\", \"risk\": \"$(risk)\", \"impact\": \"$(impact)\", \"cmdb_ci\": \"$(configurationitem)\", \"assignment_group\": \"$(assignmentgroup)\", \"requested_by_date\": \"$(RELEASE.DEPLOYMENT.STARTTIME)\", \"start_date\": \"$(schedulestarttime)\",  \"end_date\": \"$(scheduleendtime)\" {{#if otherParameters}}{{toCommaSeparatedKeyValueList otherParameters true}}{{/if}} }",
             "Headers": "{\"Content-Type\":\"application/json\", \"Accept\":\"application/json\"}",
             "WaitForCompletion": "false",
             "Expression": "eq(jsonpath('$.result.state')[0], 'New')"
